@@ -1,0 +1,37 @@
+Suma dintre numarul 5+6i si numarul 7+8i este 12+14i
+Produsul dintre numarul 5+6i si numarul 7+8i este -13+82i
+Modulul numarului 5+6i este 7.81025
+Modulul numarului 7+8i este 10.6301
+Se afiseaza elementele vecoturului 1 : 
+1+2i
+3+4i
+2+5i
+2+2i
+Se afiseaza vectorul de module : 
+2.23607
+5
+5.38516
+2.82843
+Se afiseaza vectorul sortat in functie de modul : 
+1+2i
+2+2i
+3+4i
+2+5i
+Suma elementelor din vector este : 8+13i
+Se afiseaza elementele vecoturului 2 : 
+5+5i
+1+1i
+2+2i
+3+3i
+Se afiseaza vectorul de module : 
+7.07107
+1.41421
+2.82843
+4.24264
+Se afiseaza vectorul sortat in functie de modul : 
+3+3i
+5+5i
+1+1i
+2+2i
+Suma elementelor din vector este : 11+11i
+Produsul scalar intre cei doi vectori este : -10+50i
