@@ -5,35 +5,35 @@ using namespace std;
 ifstream f("in.txt");
 ofstream g("out.txt");
 
- class NumarComplex{
+ class NumarComplex{                               //clasa numar complex
    float real;
    float imag;
  public:
-     friend ostream& operator<<(ostream&, const NumarComplex&);
-     friend istream& operator>>(istream&, NumarComplex&);
-     friend NumarComplex Suma(NumarComplex&, const NumarComplex&);
-     friend NumarComplex Produs(NumarComplex&, const NumarComplex&);
-     float ModulNrComplex()
+     friend ostream& operator<<(ostream&, const NumarComplex&);                   //supraincarcare operatorului <<
+     friend istream& operator>>(istream&, NumarComplex&);                         //supraincarcare operatorului >>
+     friend NumarComplex Suma(NumarComplex&, const NumarComplex&);                //functie ce calculeaza suma dintre doua numere complexe
+     friend NumarComplex Produs(NumarComplex&, const NumarComplex&);              //functie ce calculeaza produsul dintre doua numere complexe
+     float ModulNrComplex()                                                       //functie ce calculeaza modulul unui nr complex
      {
         float modul;
         modul = sqrt(real * real + imag * imag);
         return modul;
      }
-     NumarComplex operator+(const NumarComplex& a)
+     NumarComplex operator+(const NumarComplex& a)                                //supraincarcare operatorului + pentru a aduna nr complexe 
      {
       NumarComplex nr;
       nr.real = real + a.real;
       nr.imag = imag + a.imag;
       return  nr;
      }
-     NumarComplex operator*(const NumarComplex& a)
+     NumarComplex operator*(const NumarComplex& a)                               //supraincarcarea operatorului * pentru a inmulti nr complexe
      {
          NumarComplex b;
          b.real = (real*a.real) - (imag * a.imag);
          b.imag = (real*a.imag) + (imag * a.real);
          return b;
      }
-     NumarComplex CitireNrComplex(int k)
+     NumarComplex CitireNrComplex(int k)                                        //citirea unui nr complex de la tastatura/fisier
      {
          NumarComplex t;
          if(k == 1)
@@ -48,25 +48,25 @@ ofstream g("out.txt");
      }
 
 };
-NumarComplex Suma(NumarComplex& a, const NumarComplex& b)
+NumarComplex Suma(NumarComplex& a, const NumarComplex& b)                        //functie ce calculeaza suma dintre doua numere complexe
 {
     NumarComplex c;
     c = a + b;
     return c;
 }
-NumarComplex Produs(NumarComplex& a, const NumarComplex& b)
+NumarComplex Produs(NumarComplex& a, const NumarComplex& b)                      //functie ce calculeaza produsul dintre doua numere complexe
 {
     NumarComplex c;
     c = a * b;
     return c;
 }
-istream& operator>>(istream& in, NumarComplex& num)
+istream& operator>>(istream& in, NumarComplex& num)                             //supraincarcare operatorului >>  pentru a citi un nr complex        
 {
  in >> num.real;
  in >> num.imag;
  return in;
 }
- ostream& operator<<(ostream& out, const NumarComplex& num)
+ ostream& operator<<(ostream& out, const NumarComplex& num)                     //supraincarcare operatorului << pentru a afisa un nr complex
 {
  if(num.imag > 0)
  {
@@ -86,16 +86,16 @@ istream& operator>>(istream& in, NumarComplex& num)
 }
 
 
-class VectoriDeCoplecsi
+class VectoriDeCoplecsi                                          // clasa pentru vectori de nr complexe
 {
   NumarComplex h[100];
   float p[100];
   int n;
   public:
     friend class NumarComplex;
-    friend istream& operator>>(istream&, VectoriDeCoplecsi&);
-    friend ostream& operator<<(ostream&, VectoriDeCoplecsi&);
-    int CitireNrElemente(int j)
+    friend istream& operator>>(istream&, VectoriDeCoplecsi&);            //supraincarcare operatorului >>
+    friend ostream& operator<<(ostream&, VectoriDeCoplecsi&);            //supraincarcare operatorului <<
+    int CitireNrElemente(int j)                                          //citirea unui vector de nr complexe de la tastatura/fisier
     {
        if(j == 1)
        {
@@ -109,7 +109,7 @@ class VectoriDeCoplecsi
        }
        return n;
     }
-    void CalculModuleVector(int n, int k)
+    void CalculModuleVector(int n, int k)                               //calculul modulelor unui vector de nr complexe
     {
        for(int i = 1; i <= n; i++)
        {
@@ -125,7 +125,7 @@ class VectoriDeCoplecsi
            }
        }
     }
-   NumarComplex SumaElemVector(int n)
+   NumarComplex SumaElemVector(int n)                                //suma elementelor unui vector de nr complexe
    {
        NumarComplex suma;
        suma = h[1];
@@ -135,7 +135,7 @@ class VectoriDeCoplecsi
        }
        return suma;
    }
-   void SortareVector(int n)
+   void SortareVector(int n)                                         //sortarea unui vector de numere complexe dupa modulele elementelor
    {
     NumarComplex aux;
     for (int i = 1; i <= n-1; i++)
@@ -151,7 +151,7 @@ class VectoriDeCoplecsi
              }
         }
    }
-   NumarComplex operator *(VectoriDeCoplecsi& b)
+   NumarComplex operator *(VectoriDeCoplecsi& b)                     //supraincarcare operator *pentru a face produsul scalar dintre 2 vectori
    {
        NumarComplex c;
        c = Produs(h[1], b.h[1]);
@@ -162,7 +162,7 @@ class VectoriDeCoplecsi
        return c;
    }
 };
-istream& operator>>(istream& in, VectoriDeCoplecsi& num)
+istream& operator>>(istream& in, VectoriDeCoplecsi& num)          //supraincarcare operatorului >> pentru a citi un vector de complecsi
 {
     for(int i = 1; i <= num.n; i++)
     {
@@ -170,7 +170,7 @@ istream& operator>>(istream& in, VectoriDeCoplecsi& num)
     }
     return  in;
 }
-ostream& operator<<(ostream& out, VectoriDeCoplecsi& num)
+ostream& operator<<(ostream& out, VectoriDeCoplecsi& num)        //supraincarcare operatorului << pentru a afisa un vecotor de complecsi
 {
 
     for(int i = 1;i <= num.n; i++)
@@ -179,7 +179,7 @@ ostream& operator<<(ostream& out, VectoriDeCoplecsi& num)
     }
     return out;
 }
- void meniu()
+ void meniu()                                                    //meniul
  {
      int k = 0;
      int r = 0, n, m;
@@ -189,7 +189,7 @@ ostream& operator<<(ostream& out, VectoriDeCoplecsi& num)
      {
         if(k == 0)
         {
-          cout << "Alegeti metoda prin care se citesc informatiile : " << endl;
+          cout << "Alegeti metoda prin care se citesc informatiile : " << endl;               //citire fisier/consola
           cout << "1.Citire si afisare in consola" << endl;
           cout << "2.Citire si afisare din fisier" << endl;
           cin >> k;
@@ -204,7 +204,7 @@ ostream& operator<<(ostream& out, VectoriDeCoplecsi& num)
                      cout << "1.Suma dintre doua numere complexe. " << endl;
                      cout << "2.Produsul dintre doua numere complexe. " << endl;
                      cout << "3.Aflarea modulului unui numar complex. " << endl;
-                     cout << "4.Aflarea vectorului de module. " << endl;
+                     cout << "4.Aflarea vectorului de module. " << endl;                                 //meniu secundar consola
                      cout << "5.Sortarea unui vector in functie de vectorul de module. " << endl;
                      cout << "6.Suma elementelor unui vector de numere complexe. " << endl;
                      cout << "7.Produsul scalar dintre doi vectori de numere complexe. " << endl;
@@ -215,7 +215,7 @@ ostream& operator<<(ostream& out, VectoriDeCoplecsi& num)
                      cout << "Dati doua numere complexe:" << endl;
                      cin >> c;
                      cin >> d;
-                     suma = Suma(c, d);
+                     suma = Suma(c, d);                                                                      
                      cout << "Suma dintre numarul " << c <<" si numarul " << d << " este " << suma << endl;
                      cout << "Pentru a reveni la meniul anterior apasati 0." << endl;
                      cin >> r;
@@ -318,7 +318,7 @@ ostream& operator<<(ostream& out, VectoriDeCoplecsi& num)
                          g << "Modulul numarului " << d << " este " << d.ModulNrComplex() << endl;
                          n = l.CitireNrElemente(k);
                          f >> l;
-                         g << "Se afiseaza elementele vecoturului 1 : " << endl;
+                         g << "Se afiseaza elementele vecoturului 1 : " << endl;                                                //afisare in fisier
                          g << l;
                          g << "Se afiseaza vectorul de module : " << endl;
                          l.CalculModuleVector(n, k);
