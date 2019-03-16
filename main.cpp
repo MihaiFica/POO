@@ -19,7 +19,7 @@ ofstream g("out.txt");
         modul = sqrt(real * real + imag * imag);
         return modul;
      }
-     NumarComplex operator+(const NumarComplex& a)                                //supraincarcare operatorului + pentru a aduna nr complexe 
+     NumarComplex operator+(const NumarComplex& a)                                //supraincarcare operatorului + pentru a aduna nr complexe
      {
       NumarComplex nr;
       nr.real = real + a.real;
@@ -60,7 +60,7 @@ NumarComplex Produs(NumarComplex& a, const NumarComplex& b)                     
     c = a * b;
     return c;
 }
-istream& operator>>(istream& in, NumarComplex& num)                             //supraincarcare operatorului >>  pentru a citi un nr complex        
+istream& operator>>(istream& in, NumarComplex& num)                             //supraincarcare operatorului >>  pentru a citi un nr complex
 {
  in >> num.real;
  in >> num.imag;
@@ -94,7 +94,8 @@ class VectoriDeCoplecsi                                          // clasa pentru
   public:
     friend class NumarComplex;
     friend istream& operator>>(istream&, VectoriDeCoplecsi&);            //supraincarcare operatorului >>
-    friend ostream& operator<<(ostream&, VectoriDeCoplecsi&);            //supraincarcare operatorului <<
+    friend ostream& operator<<(ostream&, VectoriDeCoplecsi&);
+    friend NumarComplex ProdusScalar(VectoriDeCoplecsi&, VectoriDeCoplecsi&);           //supraincarcare operatorului <<
     int CitireNrElemente(int j)                                          //citirea unui vector de nr complexe de la tastatura/fisier
     {
        if(j == 1)
@@ -109,7 +110,7 @@ class VectoriDeCoplecsi                                          // clasa pentru
        }
        return n;
     }
-    void CalculModuleVector(int n, int k)                               //calculul modulelor unui vector de nr complexe
+    void CalculModuleVector(int& n, int& k)                               //calculul modulelor unui vector de nr complexe
     {
        for(int i = 1; i <= n; i++)
        {
@@ -125,7 +126,7 @@ class VectoriDeCoplecsi                                          // clasa pentru
            }
        }
     }
-   NumarComplex SumaElemVector(int n)                                //suma elementelor unui vector de nr complexe
+   NumarComplex SumaElemVector(int& n)                                //suma elementelor unui vector de nr complexe
    {
        NumarComplex suma;
        suma = h[1];
@@ -135,7 +136,7 @@ class VectoriDeCoplecsi                                          // clasa pentru
        }
        return suma;
    }
-   void SortareVector(int n)                                         //sortarea unui vector de numere complexe dupa modulele elementelor
+   void SortareVector(int& n)                                         //sortarea unui vector de numere complexe dupa modulele elementelor
    {
     NumarComplex aux;
     for (int i = 1; i <= n-1; i++)
@@ -162,6 +163,13 @@ class VectoriDeCoplecsi                                          // clasa pentru
        return c;
    }
 };
+    NumarComplex ProdusScalar(VectoriDeCoplecsi& a,VectoriDeCoplecsi& b)
+    {
+        NumarComplex c;
+        c = a * b;
+        return c;
+    }
+
 istream& operator>>(istream& in, VectoriDeCoplecsi& num)          //supraincarcare operatorului >> pentru a citi un vector de complecsi
 {
     for(int i = 1; i <= num.n; i++)
@@ -182,8 +190,8 @@ ostream& operator<<(ostream& out, VectoriDeCoplecsi& num)        //supraincarcar
  void meniu()                                                    //meniul
  {
      int k = 0;
-     int r = 0, n, m;
-     NumarComplex c, d, suma1, suma2, suma;
+     int r = 9, n, m;
+     NumarComplex c, d;
      VectoriDeCoplecsi l, o;
      while(1)
      {
@@ -200,23 +208,14 @@ ostream& operator<<(ostream& out, VectoriDeCoplecsi& num)        //supraincarcar
              switch(r)
              {
                  case 0:
-                     cout << "Alegeti una dintre variantele urmatoare : " << endl;
-                     cout << "1.Suma dintre doua numere complexe. " << endl;
-                     cout << "2.Produsul dintre doua numere complexe. " << endl;
-                     cout << "3.Aflarea modulului unui numar complex. " << endl;
-                     cout << "4.Aflarea vectorului de module. " << endl;                                 //meniu secundar consola
-                     cout << "5.Sortarea unui vector in functie de vectorul de module. " << endl;
-                     cout << "6.Suma elementelor unui vector de numere complexe. " << endl;
-                     cout << "7.Produsul scalar dintre doi vectori de numere complexe. " << endl;
-                     cout << "8.Revenire la meniul principal. " << endl;
+                     cout <<"Alegeti o alta varinata din cele de mai sus"<<endl;
                      cin >> r;
                     break;
                  case 1:
                      cout << "Dati doua numere complexe:" << endl;
                      cin >> c;
                      cin >> d;
-                     suma = Suma(c, d);                                                                      
-                     cout << "Suma dintre numarul " << c <<" si numarul " << d << " este " << suma << endl;
+                     cout << "Suma dintre numarul " << c <<" si numarul " << d << " este " << Suma(c, d) << endl;
                      cout << "Pentru a reveni la meniul anterior apasati 0." << endl;
                      cin >> r;
                      cout << endl;
@@ -273,8 +272,7 @@ ostream& operator<<(ostream& out, VectoriDeCoplecsi& num)        //supraincarcar
                       cout << "Se afiseaza elementele vecoturului : " << endl;
                       cout << l;
                       cout << "Suma elementelor din vector este : ";
-                      suma = l.SumaElemVector(n);
-                      cout << suma << endl;
+                      cout << l.SumaElemVector(n) << endl;
                       cout << "Pentru a reveni la meniul anterior apasati 0." << endl;
                       cin >> r;
                       break;
@@ -289,7 +287,7 @@ ostream& operator<<(ostream& out, VectoriDeCoplecsi& num)        //supraincarcar
                       cin >> o;
                       if(m == n)
                       {
-                      cout << "Produsul scalar intre cei doi vectori este : " << l * o << endl;
+                      cout << "Produsul scalar intre cei doi vectori este : " << ProdusScalar(l,o)<< endl;
                       }
                       else
                       {
@@ -301,6 +299,18 @@ ostream& operator<<(ostream& out, VectoriDeCoplecsi& num)        //supraincarcar
                  case 8:
                       k = 0;
                       break;
+                 case 9:
+                     cout << "Alegeti una dintre variantele urmatoare : " << endl;
+                     cout << "1.Suma dintre doua numere complexe. " << endl;
+                     cout << "2.Produsul dintre doua numere complexe. " << endl;
+                     cout << "3.Aflarea modulului unui numar complex. " << endl;
+                     cout << "4.Aflarea vectorului de module. " << endl;                                 //meniu secundar consola
+                     cout << "5.Sortarea unui vector in functie de vectorul de module. " << endl;
+                     cout << "6.Suma elementelor unui vector de numere complexe. " << endl;
+                     cout << "7.Produsul scalar dintre doi vectori de numere complexe. " << endl;
+                     cout << "8.Revenire la meniul principal. " << endl;
+                     cin >> r;
+                     break;
                  default:
                     cout << "Numarul nu se afla printre variante.Apasati un numar de la 1 la 8" << endl;
                     cin >> r;
@@ -326,8 +336,7 @@ ostream& operator<<(ostream& out, VectoriDeCoplecsi& num)        //supraincarcar
                          l.SortareVector(n);
                          g << l;
                          g << "Suma elementelor din vector este : ";
-                         suma1 = l.SumaElemVector(n);
-                         g << suma1 << endl;
+                         g << l.SumaElemVector(n) << endl;
                          m = o.CitireNrElemente(k);
                          f >> o;
                          g << "Se afiseaza elementele vecoturului 2 : " << endl;
@@ -338,16 +347,16 @@ ostream& operator<<(ostream& out, VectoriDeCoplecsi& num)        //supraincarcar
                          o.SortareVector(m);
                          g << o;
                          g << "Suma elementelor din vector este : ";
-                         suma2 = o.SumaElemVector(m);
-                         g << suma2 << endl;
+                         g << o.SumaElemVector(m) << endl;
                          if(m == n)
                          {
                          g << "Produsul scalar intre cei doi vectori este : ";
-                         g << l*o;
+                         g << ProdusScalar(l,o);
                          }
                          else
                          g << "Produsul scalar nu se poate calcula deoarece vectorii au lungimi diferite.";
-                         break;
+                         cout << "Pentru a reveni la meniul anterior apasati 0." << endl;
+                         cin >> k;
                     }
      }
  }
